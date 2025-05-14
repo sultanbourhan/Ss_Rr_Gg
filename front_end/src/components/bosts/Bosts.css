@@ -199,9 +199,13 @@
 .click_and_listen .click_listen .click_img img {
     width: 100%;
     border-radius: var(--border-radius);
-    height: 200px;
+    height:auto;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
+    aspect-ratio: 1/1;
+    filter: grayscale(100%);
+     transition: filter 0.3s ease;
+     object-fit: cover;
 }
 
 .click_and_listen .click_listen .click_img img:hover {
@@ -548,7 +552,10 @@
     background-color: rgb(231 151 151) !important;
 }
 
-
+.active_true p,
+.active_false p{
+    color: black !important;
+}
 .click_yes {
     padding: 10px 15px;
     font-size: 18px;

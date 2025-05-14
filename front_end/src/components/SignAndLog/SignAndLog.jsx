@@ -85,6 +85,7 @@ const SignAndLog = () => {
                 password,
                 passwordConfirm,);
         }
+        
     };
 
     const handleSignIn = async (e) => {
@@ -171,7 +172,7 @@ const SignAndLog = () => {
                             <input type="password" placeholder="Confirm Password" value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)} />
                         </div>
                         <Link to="/sign_school">Register as an Educational Institution!!!</Link>
-                                
+                                <p className="hidden" onClick={handleSignInClick}>Already have an account? <span>Sign In</span> </p>
                         <button type="submit">Sign Up</button>
                     </form>
                 </div>
@@ -222,6 +223,7 @@ const SignAndLog = () => {
                         </div>
 
                         <a href="#">Forgot Your Password?</a>
+                        <p className="hidden" onClick={handleSignUpClick}>Don't have an account? <span>Sign Up</span> </p>
                         <button type="submit">Sign In</button>
                     </form>
                 </div>

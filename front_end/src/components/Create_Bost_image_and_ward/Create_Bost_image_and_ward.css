@@ -221,7 +221,7 @@
 
 
 .add-question-btn {
-  background-color: white; /* أزرق فاتح */
+  background-color: var(--box-color);/* أزرق فاتح */
   color: var(--text-color);
   border: none;
   padding: 10px 20px;

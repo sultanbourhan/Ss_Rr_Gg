@@ -26,65 +26,76 @@ import Loading_coment from "../Loading_coment/Loading_coment";
 import Loading_Bookmark from "../Loading_Bookmark/Loading_Bookmark";
 
 // Facebook-like Modal Gallery Component
-const MediaGalleryModal = ({ isOpen, onClose, media, currentIndex, setCurrentIndex }) => {
+const MediaGalleryModal = ({
+  isOpen,
+  onClose,
+  media,
+  currentIndex,
+  setCurrentIndex,
+}) => {
   if (!isOpen) return null;
-  
+
   const handlePrevious = () => {
-    setCurrentIndex(prev => (prev === 0 ? media.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
   };
-  
+
   const handleNext = () => {
-    setCurrentIndex(prev => (prev === media.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
   };
-  
+
   const currentMedia = media[currentIndex];
-  
+
   return createPortal(
     <div className="fb-gallery-modal-overlay" onClick={onClose}>
-      <div className="fb-gallery-modal-content" onClick={e => e.stopPropagation()}>
+      <div
+        className="fb-gallery-modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button className="fb-gallery-modal-close" onClick={onClose}>
           &times;
         </button>
-        
+
         <div className="fb-gallery-modal-navigation">
           <button className="fb-gallery-modal-prev" onClick={handlePrevious}>
             &#10094;
           </button>
-          
+
           <div className="fb-gallery-modal-media-container">
-            {currentMedia.type === 'image' ? (
-              <img 
-                src={currentMedia.src} 
-                alt="" 
-                className="fb-gallery-modal-media" 
+            {currentMedia.type === "image" ? (
+              <img
+                src={currentMedia.src}
+                alt=""
+                className="fb-gallery-modal-media"
               />
             ) : (
-              <video 
-                src={currentMedia.src} 
-                controls 
-                className="fb-gallery-modal-media" 
-                autoPlay 
+              <video
+                src={currentMedia.src}
+                controls
+                className="fb-gallery-modal-media"
+                autoPlay
               />
             )}
           </div>
-          
+
           <button className="fb-gallery-modal-next" onClick={handleNext}>
             &#10095;
           </button>
         </div>
-        
+
         <div className="fb-gallery-modal-thumbnails">
           {media.map((item, idx) => (
-            <div 
-              key={item.key} 
-              className={`fb-gallery-modal-thumbnail ${idx === currentIndex ? 'active' : ''}`}
+            <div
+              key={item.key}
+              className={`fb-gallery-modal-thumbnail ${
+                idx === currentIndex ? "active" : ""
+              }`}
               onClick={() => setCurrentIndex(idx)}
             >
-              {item.type === 'image' ? (
+              {item.type === "image" ? (
                 <img src={item.src} alt="" />
               ) : (
                 <div className="video-thumbnail">
-                  <img src={item.src.replace(/\.[^.]+$/, '.jpg')} alt="" />
+                  <img src={item.src.replace(/\.[^.]+$/, ".jpg")} alt="" />
                   <span className="video-icon">▶</span>
                 </div>
               )}
@@ -340,7 +351,6 @@ const Bosts = () => {
           headers: { Authorization: `Bearer ${cookies.token}` }, // إضافة التوكن في الهيدر
         }
       );
-
     } catch (error) {
       console.error("Error fetching data", error); // في حال حدوث خطأ
     }
@@ -366,45 +376,37 @@ const Bosts = () => {
     });
   };
 
-
-
-
   const commentRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        commentRef.current &&
-        !commentRef.current.contains(event.target)
-      ) {
+      if (commentRef.current && !commentRef.current.contains(event.target)) {
         setShowCommentForPostId(null); // إغلاق الكومنتس
       }
     };
 
     if (showCommentForPostId) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showCommentForPostId]);
-
-
 
   const post5SliderRef = useRef(null);
 
   return (
     <div className="bosts">
       {/* Modal Gallery Component */}
-      <MediaGalleryModal 
-        isOpen={galleryModalOpen} 
-        onClose={() => setGalleryModalOpen(false)} 
-        media={galleryMedia} 
-        currentIndex={currentMediaIndex} 
-        setCurrentIndex={setCurrentMediaIndex} 
+      <MediaGalleryModal
+        isOpen={galleryModalOpen}
+        onClose={() => setGalleryModalOpen(false)}
+        media={galleryMedia}
+        currentIndex={currentMediaIndex}
+        setCurrentIndex={setCurrentMediaIndex}
       />
-      
+
       {/* عرض البوستات حسب النوع */}
       {relod_1 ? (
         <Loading_main />
@@ -459,7 +461,7 @@ const Bosts = () => {
                     </span>
                   </div>
                 </div>
-                <h2>Click on the image and listen</h2>
+                <h2>Click/Tap the image to hear audio.</h2>
                 <div className="click_listen">
                   {currentBoxes.map((pos) => {
                     const handlePlayAudio = (audioId) => {
@@ -562,10 +564,11 @@ const Bosts = () => {
                       }}
                       className={`inter-icon
                       
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -589,12 +592,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -620,11 +627,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else if (post.type === "post_2") {
+          } else if (post.type === "post_2") {
             return (
               <div key={index} className="all_bost choose_the_correct_answer">
                 <div className="name_shoole">
@@ -821,10 +826,11 @@ const Bosts = () => {
                         handleBook(post._id);
                       }}
                       className={`inter-icon 
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -848,12 +854,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -879,11 +889,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else if (post.type === "post_3") {
+          } else if (post.type === "post_3") {
             return (
               <div key={index} className="all_bost bost_true_or-false posts3">
                 <div className="name_shoole">
@@ -904,7 +912,7 @@ const Bosts = () => {
                     </span>
                   </div>
                 </div>
-                <h2>True Or False!!!</h2>
+                <h2>True or false.</h2>
                 {(() => {
                   if (!post || !post.questions) return null;
 
@@ -974,14 +982,16 @@ const Bosts = () => {
                         // أول شيء الكلاس:
                         const answerClass =
                           isCorrect !== undefined
-                            ? `que_tr_or_fa ${isCorrect ? "active_true" : "active_false"
-                            }`
+                            ? `que_tr_or_fa ${
+                                isCorrect ? "active_true" : "active_false"
+                              }`
                             : "que_tr_or_fa";
 
                         const iconClass =
                           isCorrect !== undefined
-                            ? `icon_true_or_false ${isCorrect ? "iconnone" : "iconnone"
-                            }`
+                            ? `icon_true_or_false ${
+                                isCorrect ? "iconnone" : "iconnone"
+                              }`
                             : "icon_true_or_false";
 
                         return (
@@ -1087,10 +1097,11 @@ const Bosts = () => {
                         handleBook(post._id);
                       }}
                       className={`inter-icon 
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -1114,12 +1125,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -1145,11 +1160,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else if (post.type === "post_4") {
+          } else if (post.type === "post_4") {
             return (
               <div key={index} className="all_bost image_and_answer posts4">
                 <div className="name_shoole">
@@ -1227,7 +1240,8 @@ const Bosts = () => {
 
                         return (
                           <div className="image_answer" key={item._id}>
-                            <h2>What's in the picture?</h2>
+                            {item.question ? <h2>{item.question}</h2> : null}
+
                             <div className="img_ans">
                               <img
                                 src={`http://localhost:8000/posts/${item.img}`}
@@ -1342,10 +1356,11 @@ const Bosts = () => {
                         handleBook(post._id);
                       }}
                       className={`inter-icon 
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -1370,12 +1385,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -1401,11 +1420,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else if (post.type === "post_5") {
+          } else if (post.type === "post_5") {
             return (
               <div key={index} className="all_bost video_img_word posts4">
                 <div className="name_shoole">
@@ -1432,29 +1449,30 @@ const Bosts = () => {
                   </p>
 
                   {/* Check if there are media items to display */}
-                  {((post.img_post && post.img_post.length > 0) || (post.video_post && post.video_post.length > 0)) && (
+                  {((post.img_post && post.img_post.length > 0) ||
+                    (post.video_post && post.video_post.length > 0)) && (
                     <div className="post5-media-slider">
                       {(() => {
                         const allMedia = [];
-                        
+
                         // Add videos first to prioritize them
                         if (post.video_post && post.video_post.length > 0) {
                           post.video_post.forEach((video, index) => {
                             allMedia.push({
-                              type: 'video',
+                              type: "video",
                               src: `http://localhost:8000/posts/${video}`,
-                              key: `video-${index}`
+                              key: `video-${index}`,
                             });
                           });
                         }
-                        
+
                         // Then add images
                         if (post.img_post && post.img_post.length > 0) {
                           post.img_post.forEach((img, index) => {
                             allMedia.push({
-                              type: 'image',
+                              type: "image",
                               src: `http://localhost:8000/posts/${img}`,
-                              key: `img-${index}`
+                              key: `img-${index}`,
                             });
                           });
                         }
@@ -1465,17 +1483,29 @@ const Bosts = () => {
                           setCurrentMediaIndex(mediaIndex);
                           setGalleryModalOpen(true);
                         };
-                        
+
                         // Facebook-like gallery layout
                         if (allMedia.length === 1) {
                           // Single media item - full width
                           const media = allMedia[0];
                           return (
-                            <div className="fb-gallery fb-gallery-single" onClick={() => openGalleryModal(0)}>
-                              {media.type === 'image' ? (
-                                <img src={media.src} alt="" className="post-media" />
+                            <div
+                              className="fb-gallery fb-gallery-single"
+                              onClick={() => openGalleryModal(0)}
+                            >
+                              {media.type === "image" ? (
+                                <img
+                                  src={media.src}
+                                  alt=""
+                                  className="post-media"
+                                />
                               ) : (
-                                <video src={media.src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                <video
+                                  src={media.src}
+                                  controls
+                                  className="post-media"
+                                  onClick={(e) => e.stopPropagation()}
+                                />
                               )}
                             </div>
                           );
@@ -1484,11 +1514,24 @@ const Bosts = () => {
                           return (
                             <div className="fb-gallery fb-gallery-two">
                               {allMedia.map((media, index) => (
-                                <div className="fb-gallery-item" key={media.key} onClick={() => openGalleryModal(index)}>
-                                  {media.type === 'image' ? (
-                                    <img src={media.src} alt="" className="post-media" />
+                                <div
+                                  className="fb-gallery-item"
+                                  key={media.key}
+                                  onClick={() => openGalleryModal(index)}
+                                >
+                                  {media.type === "image" ? (
+                                    <img
+                                      src={media.src}
+                                      alt=""
+                                      className="post-media"
+                                    />
                                   ) : (
-                                    <video src={media.src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                    <video
+                                      src={media.src}
+                                      controls
+                                      className="post-media"
+                                      onClick={(e) => e.stopPropagation()}
+                                    />
                                   )}
                                 </div>
                               ))}
@@ -1498,20 +1541,45 @@ const Bosts = () => {
                           // Three media items - one large, two small
                           return (
                             <div className="fb-gallery fb-gallery-three">
-                              <div className="fb-gallery-main" onClick={() => openGalleryModal(0)}>
-                                {allMedia[0].type === 'image' ? (
-                                  <img src={allMedia[0].src} alt="" className="post-media" />
+                              <div
+                                className="fb-gallery-main"
+                                onClick={() => openGalleryModal(0)}
+                              >
+                                {allMedia[0].type === "image" ? (
+                                  <img
+                                    src={allMedia[0].src}
+                                    alt=""
+                                    className="post-media"
+                                  />
                                 ) : (
-                                  <video src={allMedia[0].src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                  <video
+                                    src={allMedia[0].src}
+                                    controls
+                                    className="post-media"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
                                 )}
                               </div>
                               <div className="fb-gallery-side">
                                 {allMedia.slice(1, 3).map((media, index) => (
-                                  <div className="fb-gallery-item" key={media.key} onClick={() => openGalleryModal(index + 1)}>
-                                    {media.type === 'image' ? (
-                                      <img src={media.src} alt="" className="post-media" />
+                                  <div
+                                    className="fb-gallery-item"
+                                    key={media.key}
+                                    onClick={() => openGalleryModal(index + 1)}
+                                  >
+                                    {media.type === "image" ? (
+                                      <img
+                                        src={media.src}
+                                        alt=""
+                                        className="post-media"
+                                      />
                                     ) : (
-                                      <video src={media.src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                      <video
+                                        src={media.src}
+                                        controls
+                                        className="post-media"
+                                        onClick={(e) => e.stopPropagation()}
+                                      />
                                     )}
                                   </div>
                                 ))}
@@ -1523,11 +1591,24 @@ const Bosts = () => {
                           return (
                             <div className="fb-gallery fb-gallery-four">
                               {allMedia.map((media, index) => (
-                                <div className="fb-gallery-item" key={media.key} onClick={() => openGalleryModal(index)}>
-                                  {media.type === 'image' ? (
-                                    <img src={media.src} alt="" className="post-media" />
+                                <div
+                                  className="fb-gallery-item"
+                                  key={media.key}
+                                  onClick={() => openGalleryModal(index)}
+                                >
+                                  {media.type === "image" ? (
+                                    <img
+                                      src={media.src}
+                                      alt=""
+                                      className="post-media"
+                                    />
                                   ) : (
-                                    <video src={media.src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                    <video
+                                      src={media.src}
+                                      controls
+                                      className="post-media"
+                                      onClick={(e) => e.stopPropagation()}
+                                    />
                                   )}
                                 </div>
                               ))}
@@ -1539,11 +1620,24 @@ const Bosts = () => {
                           return (
                             <div className="fb-gallery fb-gallery-many">
                               {allMedia.slice(0, 4).map((media, index) => (
-                                <div className="fb-gallery-item" key={media.key} onClick={() => openGalleryModal(index)}>
-                                  {media.type === 'image' ? (
-                                    <img src={media.src} alt="" className="post-media" />
+                                <div
+                                  className="fb-gallery-item"
+                                  key={media.key}
+                                  onClick={() => openGalleryModal(index)}
+                                >
+                                  {media.type === "image" ? (
+                                    <img
+                                      src={media.src}
+                                      alt=""
+                                      className="post-media"
+                                    />
                                   ) : (
-                                    <video src={media.src} controls className="post-media" onClick={(e) => e.stopPropagation()} />
+                                    <video
+                                      src={media.src}
+                                      controls
+                                      className="post-media"
+                                      onClick={(e) => e.stopPropagation()}
+                                    />
                                   )}
                                   {index === 3 && allMedia.length > 4 && (
                                     <div className="fb-gallery-more">
@@ -1558,7 +1652,6 @@ const Bosts = () => {
                           return null;
                         }
                       })()}
-             
                     </div>
                   )}
                   <div className="comment_lenght">
@@ -1603,10 +1696,11 @@ const Bosts = () => {
                         handleBook(post._id);
                       }}
                       className={`inter-icon  
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -1630,12 +1724,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -1661,11 +1759,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else if (post.type === "post_6") {
+          } else if (post.type === "post_6") {
             return (
               <div key={index} className="all_bost ifrems posts6">
                 <div className="name_shoole">
@@ -1687,21 +1783,41 @@ const Bosts = () => {
                   </div>
                 </div>
                 <div className="ifrem">
-                  <h2>What's in the picture?</h2>
+                  {/* <h2>What's in the picture?</h2> */}
                   <p style={{ whiteSpace: "pre-line" }}>{post.ifrem.des}</p>
-                  {post.ifrem?.url?.includes("onedrive.live.com") ? (
-                    <iframe
-                      src={post.ifrem.url}
-                      frameBorder="0"
-                      width="100%"
-                      height="569"
-                      allowFullScreen
-                      mozallowfullscreen="true"
-                      webkitallowfullscreen="true"
-                    />
-                  ) : (
-                    <p>الرابط غير صالح أو لا يمكن عرضه.</p>
-                  )}
+                  <div
+  style={{
+    aspectRatio:
+      post.ifrem?.dimensions === "square"
+        ? "1 / 1"
+        : post.ifrem?.dimensions === "broad"
+        ? "9 / 16"
+        : post.ifrem?.dimensions === "linear"
+        ? "16 / 9"
+        : "16 / 9", // افتراضي
+    width: "100%",
+    maxWidth:
+      post.ifrem?.dimensions === "square"
+        ? "600px"
+        : post.ifrem?.dimensions === "broad"
+        ? "400px"
+        : post.ifrem?.dimensions === "linear"
+        ? "900px"
+        : "800px", // افتراضي
+    margin: "0 auto", // لتوسيط العنصر
+  }}
+>
+  <iframe
+    src={post.ifrem.url}
+    frameBorder="0"
+    allowFullScreen
+    style={{
+      width: "100%",
+      height: "100%",
+      border: "none",
+    }}
+  />
+</div>
 
 
                   <div className="comment_lenght">
@@ -1746,10 +1862,11 @@ const Bosts = () => {
                         handleBook(post._id);
                       }}
                       className={`inter-icon 
-        ${bookId && bookId.some((item) => item.post?._id === post._id)
-                          ? "active_book"
-                          : ""
-                        }`}
+        ${
+          bookId && bookId.some((item) => item.post?._id === post._id)
+            ? "active_book"
+            : ""
+        }`}
                       icon={faBookmark}
                     />
                   )}
@@ -1773,12 +1890,16 @@ const Bosts = () => {
                             <img
                               src={
                                 com.user_comment?.profilImage
-                                  ? com.user_comment.profilImage.startsWith("http")
+                                  ? com.user_comment.profilImage.startsWith(
+                                      "http"
+                                    )
                                     ? com.user_comment.profilImage
                                     : `http://localhost:8000/user/${com.user_comment.profilImage}`
                                   : "/image/pngegg.png"
                               }
-                              alt={`Image of ${com.user_comment?.name || "user"}`}
+                              alt={`Image of ${
+                                com.user_comment?.name || "user"
+                              }`}
                             />
 
                             <div className="name_user_comment">
@@ -1804,11 +1925,9 @@ const Bosts = () => {
                     </div>
                   </div>
                 )}
-
               </div>
             );
-          }
-          else {
+          } else {
             return null;
           }
         })

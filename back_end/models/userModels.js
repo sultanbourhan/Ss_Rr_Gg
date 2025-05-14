@@ -43,6 +43,15 @@ const userSchema = new mongoose.Schema({
         default: "user",
     },
 
+    followers: [
+        {
+            friend: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            },
+        },
+    ],
+
     active: {
         type: Boolean,
         default: true,

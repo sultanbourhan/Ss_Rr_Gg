@@ -77,10 +77,10 @@ const Header = () => {
     <header>
       <div className='container'>
         <div className='header_respon'>
-          <img src="./image/logo.png" alt="" />
+          <img src="./image/log1.png" alt="" />
           <form action="">
             <FontAwesomeIcon className='search_icon' icon={faSearch} />
-            <input type="text" placeholder='Search for schools, or people you may know.' />
+            <input type="text" placeholder='Search.' />
           </form>
 
           <div className='profile' onClick={handleProfileClick} ref={commentRef}>

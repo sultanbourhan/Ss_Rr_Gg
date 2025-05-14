@@ -659,7 +659,7 @@ const Profile = () => {
                                 </span>
                               </div>
                             </div>
-                            <h2>Click on the image and listen</h2>
+                            <h2>Click/Tap the image to hear audio.</h2>
                             <div className="click_listen">
                               {currentBoxes.map((pos) => {
                                 const handlePlayAudio = (audioId) => {
@@ -1219,7 +1219,7 @@ const Profile = () => {
                                 </span>
                               </div>
                             </div>
-                            <h2>True Or False!!!</h2>
+                            <h2>True or false.</h2>
                             {(() => {
                               if (!post || !post.questions) return null;
 
@@ -1625,7 +1625,7 @@ const Profile = () => {
                                         className="image_answer"
                                         key={item._id}
                                       >
-                                        <h2>What's in the picture?</h2>
+                                        {item.question ? <h2>{item.question}</h2> : null}
                                         <div className="img_ans">
                                           <img
                                             src={`http://localhost:8000/posts/${item.img}`}
@@ -2228,7 +2228,7 @@ const Profile = () => {
                               </div>
                             </div>
                             <div className="ifrem">
-                              <h2>What's in the picture?</h2>
+                              {/* <h2>What's in the picture?</h2> */}
                               <p>{post.ifrem.des}</p>
                               <iframe
                                 src={post.ifrem ? post.ifrem.url : null}

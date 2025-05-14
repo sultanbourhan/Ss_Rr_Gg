@@ -82,7 +82,7 @@ const Create_menu = () => {
   const links = [
     {
       to: "/Create_Bost_Video_and_image",
-      text: "Video And Image And Word",
+      text: "Text, image or video.",
       tooltip: "Share images, videos, and text together. Ideal for explaining ideas or sharing visual and educational content."
     },
     {
@@ -92,7 +92,7 @@ const Create_menu = () => {
     },
     {
       to: "/create_bost_image_and_answer",
-      text: "Image And Answer",
+      text: "Based on the image, select the correct answer.",
       tooltip: "Display an image with multiple answer choices to select the correct one. Ideal for testing visual comprehension."
     },
     {
@@ -102,12 +102,12 @@ const Create_menu = () => {
     },
     {
       to: "/create_bost_true_or_false",
-      text: "True Or False",
+      text: "True or false.",
       tooltip: "Present a statement and determine if it's true or false. Perfect for testing concepts and information."
     },
     {
       to: "/Create_Bost_Ifrem",
-      text: "Create Bost Ifrem",
+      text: "<iframe>/<script>",
       tooltip: "Embed external content such as YouTube videos or interactive tools using an iframe."
     }
   ];
@@ -127,11 +127,11 @@ const Create_menu = () => {
   }
   alt={`Image of ${Mydata.name}`}
 />
-        <p>Choose one of the posts to create it.</p>
+        <p>Please choose from the list the {Mydata.name}</p>
       </div>
 
       <button onClick={toggleMenu} ref={buttonRef}>
-        Create Post
+        Create a post
       </button>
 
       <div className="menus" style={{ display: showMenu ? 'block' : 'none' }} ref={menuRef} >

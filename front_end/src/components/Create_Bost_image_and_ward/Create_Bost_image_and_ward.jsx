@@ -75,7 +75,7 @@ const Create_Bost_image_and_ward = () => {
       <div className="container">
         <Menu />
         <div className="bost_image_and_ward">
-          <h2>Create Bost Image, Audio, and Word</h2>
+          <h2>Upload an image along with its audio file.</h2>
           <form className="unified_form">
             {forms.map((form, index) => (
               <div className="form" key={index}>
@@ -153,7 +153,7 @@ const Create_Bost_image_and_ward = () => {
                     onChange={(e) =>
                       handleFormChange(index, "word", e.target.value)
                     }
-                    placeholder="Enter word..."
+                    placeholder="What's on your mind ?"
                   />
                 </div>
               </div>
@@ -164,7 +164,7 @@ const Create_Bost_image_and_ward = () => {
             <span className="icon">＋</span> Another Question
           </button>
           <button type="submit" className="submit_btn" onClick={handleSubmit}>
-            Submit
+            Post
           </button>
           </div>
 

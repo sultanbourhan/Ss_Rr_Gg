@@ -11,6 +11,11 @@ ifrem:
   {
     url:String,
     des:String,
+    dimensions:{
+      type: String,
+      enum: ["square", "linear", "broad"],
+      default: "square",
+    },
   }
 ,
   

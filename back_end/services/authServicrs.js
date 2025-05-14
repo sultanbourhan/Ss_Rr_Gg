@@ -399,7 +399,6 @@ exports.Send_friend_request = asyncHandler(async (req, res, next) => {
   const receiverId = req.params.userId;
 
   try {
-    // التحقق من وجود المستخدمين
     const sender = await usermodel.findById(senderId);
     const receiver = await usermodel.findById(receiverId);
 
@@ -407,7 +406,42 @@ exports.Send_friend_request = asyncHandler(async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // إضافة طلب الصداقة إلى قائمة طلبات الصداقة الخاصة بالمستقبل
+    // التأكد إذا كانوا أصدقاء أصلًا
+    const alreadyFriends = receiver.friends.some(
+      (f) => f.friend.toString() === senderId.toString()
+    );
+
+    if (alreadyFriends) {
+      return res.status(400).json({ message: "You are already friends" });
+    }
+
+    // إذا المستقبل موظف: تصير عملية follow بدل طلب صداقة
+    if (receiver.role === "employee") {
+      const alreadyFollowing = receiver.followers.some(
+        (f) => f.friend.toString() === senderId.toString()
+      );
+
+      if (alreadyFollowing) {
+        return res.status(400).json({ message: "Already following this employee" });
+      }
+
+      receiver.followers.push({ friend: senderId });
+      await receiver.save();
+
+      return res.status(200).json({
+        message: "You are now following this employee",
+      });
+    }
+
+    // إذا مو موظف: طلب صداقة عادي
+    const alreadyRequested = receiver.Friend_requests.some(
+      (req) => req.friend.toString() === senderId.toString()
+    );
+
+    if (alreadyRequested) {
+      return res.status(400).json({ message: "Friend request already sent" });
+    }
+
     receiver.Friend_requests.push({ friend: senderId });
     await receiver.save();
 

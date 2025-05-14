@@ -68,7 +68,7 @@ const Create_Bost_True_Or_False = () => {
       <div className="container">
         <Menu />
         <div className="Create_Bost_True_Or_False">
-          <h2>Create Bost True Or False</h2>
+          <h2>True or false.</h2>
           <div className="all_form">
             {questions.map((question, index) => {
               return (
@@ -86,7 +86,7 @@ const Create_Bost_True_Or_False = () => {
                     )}
                     <input
                       type="text"
-                      placeholder={`Put the question ${index + 1}.`}
+                      placeholder={`Question ${index + 1}`}
                       value={question.question}
                       name="question"
                       onChange={(e) => handleQuestionChange(index, e)}
@@ -113,7 +113,7 @@ const Create_Bost_True_Or_False = () => {
           <button type="button" className="add-question-btn" onClick={handleAddQuestion}>
   <span className="icon">＋</span> Another Question
 </button>
-            <button type="submit" className="submit_btn" onClick={handleSubmit}>Submit</button>
+            <button type="submit" className="submit_btn" onClick={handleSubmit}>Post</button>
           </div>
         </div>
         <Chat />

@@ -106,13 +106,13 @@ const Create_Bost_Video_and_image = () => {
       <div className="container">
         <Menu />
         <div className="Create_Bost_Video_and_image">
-          <h2>Create Bost True Or False</h2>
+          <h2>Text, image or video.</h2>
           <div className="all_form">
             {formErrors[""] && <p className="_error">{formErrors[""].msg}</p>}
             <div className="form">
               <textarea
                 type="text"
-                placeholder="Put the first question."
+                placeholder="What's on your mind ?"
                 value={qus1}
                 onChange={(e) => Setrqs1(e.target.value)}
               ></textarea>
@@ -191,7 +191,7 @@ const Create_Bost_Video_and_image = () => {
           </div>
 
           <button type="submit" className="submit_btn" onClick={handleSubmit}>
-            Submit
+            Post
           </button>
         </div>
         <Chat />

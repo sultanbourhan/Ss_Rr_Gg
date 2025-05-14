@@ -7,6 +7,7 @@ const post_4_Schema = new mongoose.Schema({
   },
   questions: [
     {
+      question: String, 
       img: { type: String, required: true }, // اسم الصورة المرتبطة بالسؤال
       word_1: { type: String, required: true }, // الكلمة الأولى
       word_2: { type: String, required: true }, // الكلمة الثانية

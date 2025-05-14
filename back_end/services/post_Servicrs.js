@@ -588,8 +588,11 @@ exports.createPost_6 = asyncHandler(async (req, res, next) => {
     // إنشاء المنشور
     const post = await Post_6.create({
       user: req.user._id,
-      ifrem:{  url: req.body.url,
-      des: req.body.des,}
+      ifrem:{ 
+        url: req.body.url,
+        des: req.body.des,
+        dimensions:req.body.dimensions,
+    }
     
     });
     console.log(req.body)

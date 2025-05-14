@@ -284,6 +284,8 @@ flex-direction: column;
   justify-content: space-around;
 }
 
+
+
 .the_requset .req .accept button {
   padding: 10px 30px;
   border: none;
@@ -364,6 +366,29 @@ flex-direction: column;
   transition: 0.3s all;
   display: block;
   margin-left: auto;
+  position: relative;
+}
+
+.general .req .accept button .load{
+  position: absolute;
+    width: 28px;
+  height: 28px;
+    top: 50%;
+    left:  50%;
+    transform: translate(-50% ,  -50%);
+    background-color: #ffffff00;
+    padding: 5px;
+}
+
+.general .req .accept p{
+  color: var(--text-color) ;
+  background-color: var(--box-color);
+  width: fit-content;
+  padding: 7px;
+border-radius: var(--border-radius);
+font-size: var(--text-size);
+display: block;
+    margin-left: auto;
 }
 
 .general .req .accept button:hover {
@@ -447,4 +472,22 @@ flex-direction: column;
       color: var(--title-color);
     padding: 0 15px;
     text-align: center;
+}
+
+ .accept_G{
+  width: 100%;
+  padding: 15px 10px 0 10px ;
+  display: flex;
+  justify-content: space-between;
+}
+ .accept_G button{
+  margin: auto;
+}
+ .general .accept_G button:nth-child(1){
+      background-color: #fff !important;
+    color: black !important;
+}
+
+ .accept_G button:nth-child(1):hover{
+    box-shadow: 0 0 8px var(--shadow-color) !important;
 }

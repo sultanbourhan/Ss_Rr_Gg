@@ -113,7 +113,7 @@ const Create_Bost_choose_the_correct_answer = () => {
       <div className="container">
         <Menu />
         <div className="Create_Bost_choose_the_correct_answer">
-          <h2>Create Bost Choose The Correct Answer</h2>
+          <h2>Choose the correct answer.</h2>
 
           <div className="all_form">
 
@@ -158,7 +158,7 @@ const Create_Bost_choose_the_correct_answer = () => {
             <button type="button" className="add-question-btn" onClick={addNewQuestion}>
   <span className="icon">＋</span> Another Question
 </button>
-            <button type="submit" className="submit_btn" onClick={handleSubmit}>Submit</button>
+            <button type="submit" className="submit_btn" onClick={handleSubmit}>Post</button>
             </div>
 
         </div>
